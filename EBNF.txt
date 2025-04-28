@@ -1,0 +1,84 @@
+PROGRAM      = { STATEMENT } ;
+
+STATEMENT    = STRIP_DECL , "\n"
+             | ASSIGNMENT , "\n"
+             | IF_STMT    , "\n"
+             | WHILE_STMT , "\n"
+             | FOR_STMT   , "\n"
+             | LOOP_FOREVER , "\n"
+             | COMMAND    , "\n"
+             | ";"                        ;   /* linha vazia            */
+
+/* -----------------------------------------------------------
+ *  Declarações estruturais
+ * ----------------------------------------------------------- */
+STRIP_DECL   = "strip" , INTEGER ;
+
+BLOCK        = "{" , "\n" , { STATEMENT } , "}" ;
+
+/* -----------------------------------------------------------
+ *  Estruturas de controle
+ * ----------------------------------------------------------- */
+IF_STMT      = "if" , "(" , BOOL_EXPR , ")" , BLOCK ,
+               [ "else" , BLOCK ] ;
+
+WHILE_STMT   = "while" , "(" , BOOL_EXPR , ")" , BLOCK ;
+
+FOR_STMT     = "for" , IDENTIFIER , "=" , EXPRESSION , ".." ,
+               EXPRESSION , BLOCK ;
+
+LOOP_FOREVER = "loop" , "forever" , BLOCK ;
+
+/* -----------------------------------------------------------
+ *  Comandos dedicados ao LED strip
+ * ----------------------------------------------------------- */
+COMMAND      = SET_CMD | WAIT_CMD | ROTATE_CMD | FADE_CMD ;
+
+SET_CMD      = "set" , EXPRESSION , "color" , COLOR_EXPR ;
+WAIT_CMD     = "wait" , TIME_LITERAL ;
+ROTATE_CMD   = "rotate" , EXPRESSION , "dir" , DIRECTION ;
+FADE_CMD     = "fade" , EXPRESSION ;
+
+/* -----------------------------------------------------------
+ *  Expressões
+ * ----------------------------------------------------------- */
+ASSIGNMENT   = IDENTIFIER , "=" , EXPRESSION ;
+
+EXPRESSION   = TERM , { ("+" | "-") , TERM } ;
+TERM         = FACTOR , { ("*" | "/" | "%") , FACTOR } ;
+FACTOR       = ( "+" | "-" | "!" ) , FACTOR
+             | INTEGER
+             | IDENTIFIER
+             | "(" , EXPRESSION , ")"
+             | COLOR_EXPR ;
+
+BOOL_EXPR    = REL_EXPR , { "||" , REL_EXPR } ;
+REL_EXPR     = EQ_EXPR  , { "&&" , EQ_EXPR  } ;
+EQ_EXPR      = EXPRESSION , { REL_OP , EXPRESSION } ;
+REL_OP       = "==" | "!=" | "<" | "<=" | ">" | ">=" ;
+
+/* -----------------------------------------------------------
+ *  Literais e auxiliares
+ * ----------------------------------------------------------- */
+COLOR_EXPR   = STRING_COLOR
+             | "hsv" , "(" , EXPRESSION , "," ,
+               EXPRESSION , "," , EXPRESSION , ")" ;
+
+DIRECTION    = "left" | "right" ;
+
+TIME_LITERAL = INTEGER , ( "ms" | "s" ) ;
+
+IDENTIFIER   = LETTER , { LETTER | DIGIT | "_" } ;
+INTEGER      = DIGIT  , { DIGIT } ;
+
+STRING_COLOR = "#" ,
+               HEX_DIGIT , HEX_DIGIT ,
+               HEX_DIGIT , HEX_DIGIT ,
+               HEX_DIGIT , HEX_DIGIT ;
+
+LETTER       = "a" | … | "z" | "A" | … | "Z" ;
+DIGIT        = "0" | "1" | "2" | "3" | "4"
+             | "5" | "6" | "7" | "8" | "9" ;
+HEX_DIGIT    = DIGIT
+             | "A" | "B" | "C" | "D" | "E" | "F"
+             | "a" | "b" | "c" | "d" | "e" | "f" ;
