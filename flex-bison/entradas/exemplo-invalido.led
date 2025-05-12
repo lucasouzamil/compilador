@@ -1,0 +1,10 @@
+strip 30
+
+for i = 0..29    
+  set i color #FF0000
+}
+
+loop forever {
+  rotate 1 dir lef      
+  wait 100ms
+}
