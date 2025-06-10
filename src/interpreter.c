@@ -1,23 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h> // Para strcmp
-#include <unistd.h> // Para usleep (pausa em microsegundos)
-#include <math.h> // Conversao hsv to rgb
+#include <string.h> // trata strings
+#include <unistd.h> // sleep ms/s
+#include <math.h> // converte hsv para rgb
 
 #include "interpreter.h"
 #include "simulator.h"
-#include "leds.tab.h"
+#include "lumi.tab.h"
 
-// --- Funções Auxiliares (protótipos) ---
+// funcoes auxiliares (definicoes no fim do arquivo)
 void symbol_set(InterpreterState* state, char* name, Value value);
 Value symbol_get(InterpreterState* state, char* name);
 void free_symbol_table(Symbol* table);
 ColorRGB hsv_to_rgb(float h, float s, float v);
 
 
-// --- Função Principal ---
+// funcao principal
 void interpret(NodeList* ast_root) {
-    // 1. Inicializa o estado do interpretador
+
+    // 1. inicializa o estado do interpretador
     InterpreterState state;
     state.strip_leds = NULL;
     state.strip_size = 0;
@@ -26,7 +27,7 @@ void interpret(NodeList* ast_root) {
 
     printf("\n--- Iniciando Interpretador ---\n");
 
-    // 2. Percorre a lista de statements da AST
+    // 2. percorre a lista de statements da AST
     NodeList* current = ast_root;
     while (current != NULL) {
         if (current->node) {
@@ -36,8 +37,6 @@ void interpret(NodeList* ast_root) {
     }
 
     printf("--- Fim da Interpretação ---\n");
-
-    // 3. Libera memória alocada
     free(state.strip_leds);
     free_symbol_table(state.symbol_table);
 }
@@ -50,7 +49,7 @@ void execute_statement(InterpreterState* state, AstNode* node) {
     switch (node->type) {
         case NODE_TYPE_STRIP_DECL: {
             StripDeclNode* decl = (StripDeclNode*)node;
-            if (state->strip_leds) free(state->strip_leds); // Libera fita antiga, se houver
+            if (state->strip_leds) free(state->strip_leds); 
             state->strip_size = decl->led_count;
             state->strip_leds = (ColorRGB*)calloc(state->strip_size, sizeof(ColorRGB));
             printf("Interpretador: Fita de LED inicializada com %d LEDs.\n", state->strip_size);
@@ -71,7 +70,6 @@ void execute_statement(InterpreterState* state, AstNode* node) {
             if (index_val.type == VAL_INT && color_val.type == VAL_COLOR) {
                 int index = index_val.as.int_val;
 
-                // 1. Verifica se o índice está FORA dos limites
                 if (index < 0 || index >= state->strip_size) {
                     fprintf(stderr, "\nErro de Execução: Índice de LED fora dos limites.\n");
                     fprintf(stderr, "  > Tentativa de acessar o LED %d em uma fita de tamanho %d (índices válidos: 0 a %d).\n", index, state->strip_size, state->strip_size - 1);
@@ -95,16 +93,16 @@ void execute_statement(InterpreterState* state, AstNode* node) {
             IfStmtNode* if_node = (IfStmtNode*)node;
             Value cond_val = evaluate_expression(state, if_node->condition);
 
-            // Se a condição for verdadeira (qualquer valor inteiro diferente de 0)
+            // se for verdadeiiro
             if (cond_val.type == VAL_BOOL && cond_val.as.bool_val != 0) {
-                // Executa o bloco 'if'
+                // executa o bloco if
                 NodeList* body = if_node->if_block;
                 while (body != NULL) {
                     execute_statement(state, body->node);
                     body = body->next;
                 }
-            } else if (if_node->else_block) { // Senão, se houver um bloco 'else'
-                // Executa o bloco 'else'
+            } else if (if_node->else_block) { // Senão
+                // executa o bloco else
                 NodeList* body = if_node->else_block;
                 while (body != NULL) {
                     execute_statement(state, body->node);
@@ -119,13 +117,13 @@ void execute_statement(InterpreterState* state, AstNode* node) {
             Value start_val = evaluate_expression(state, for_node->start_expr);
             Value end_val = evaluate_expression(state, for_node->end_expr);
 
-            // Verifica se os tipos dos limites estão corretos
+            // verifica se os tipos dos limites estao corretos
             if (start_val.type != VAL_INT || end_val.type != VAL_INT) {
                 fprintf(stderr, "\nErro de Execução: Os limites do loop 'for' devem ser números inteiros.\n");
                 exit(1);
             }
             
-            // Se chegou aqui, os tipos estão corretos e podemos prosseguir
+            // se chegou aqui, os tipos estao corretos
             for (int i = start_val.as.int_val; i <= end_val.as.int_val; i++) {
                 Value loop_var_val;
                 loop_var_val.type = VAL_INT;
@@ -144,7 +142,6 @@ void execute_statement(InterpreterState* state, AstNode* node) {
         
         case NODE_TYPE_LOOP_FOREVER: {
             LoopForeverNode* loop_node = (LoopForeverNode*)node;
-            // Remova o printf de "Entrando em loop infinito" para não poluir a tela
 
             while (state->is_running) {
                 NodeList* body = loop_node->block;
@@ -152,19 +149,20 @@ void execute_statement(InterpreterState* state, AstNode* node) {
                     execute_statement(state, body->node);
                     body = body->next;
                 }
-                // Após executar todos os comandos do bloco (rotate, wait),
+                // apos executar todos os comandos do bloco (rotate, wait),
                 // redesenha a fita com as novas cores.
-                simulator_draw_strip(state); // <-- ADICIONE AQUI
+                simulator_draw_strip(state);
             }
             break;
         }
         
         case NODE_TYPE_WAIT_CMD: {
             WaitCmdNode* wait_node = (WaitCmdNode*)node;
-            // usleep espera em microsegundos, então convertemos de ms
+            
+            simulator_draw_strip(state); 
+            
             usleep(wait_node->value_ms * 1000); 
-            // TESTE: Imprime a ação para vermos o que está acontecendo
-            //printf("Interpretador: Aguardando por %d ms.\n", wait_node->value_ms);
+
             break;
         }
         
@@ -176,7 +174,7 @@ void execute_statement(InterpreterState* state, AstNode* node) {
             int steps = steps_val.as.int_val % state->strip_size;
             if (steps == 0) break;
 
-            // Cria um buffer temporário para a rotação
+            // cria uma memoria temporaria para a rotação
             ColorRGB* temp_strip = (ColorRGB*)malloc(state->strip_size * sizeof(ColorRGB));
             memcpy(temp_strip, state->strip_leds, state->strip_size * sizeof(ColorRGB));
 
@@ -199,11 +197,9 @@ void execute_statement(InterpreterState* state, AstNode* node) {
     }
 }
 
-
-// --- Avaliador de Expressões ---
 Value evaluate_expression(InterpreterState* state, AstNode* node) {
     Value result;
-    result.type = VAL_INT; // Valor padrão
+    result.type = VAL_INT; // valor padrao
     result.as.int_val = 0;
 
     if (!node) return result;
@@ -215,17 +211,17 @@ Value evaluate_expression(InterpreterState* state, AstNode* node) {
             break;
         }
 
-        // REMOVA ESTE BLOCO INTEIRO DE DENTRO DE execute_statement
         case NODE_TYPE_UNARY_OP: {
             UnaryOpNode* un_op = (UnaryOpNode*)node;
             Value operand_val = evaluate_expression(state, un_op->operand);
 
-            // Se for negação numérica (ex: -1)
+            // se for negação numerica (ex: -1)
             if (un_op->op == '-' && operand_val.type == VAL_INT) {
                 result.type = VAL_INT;
                 result.as.int_val = -operand_val.as.int_val;
             } 
-            // Se for negação lógica (ex: !verdadeiro)
+
+            // se for negacao logica (ex: !verdadeiro)
             else if (un_op->op == '!' && operand_val.type == VAL_BOOL) {
                 result.type = VAL_BOOL;
                 result.as.bool_val = !operand_val.as.bool_val;
@@ -255,10 +251,9 @@ Value evaluate_expression(InterpreterState* state, AstNode* node) {
 
             result.type = VAL_COLOR;
             if (h_val.type == VAL_INT && s_val.type == VAL_INT && v_val.type == VAL_INT) {
-                // Normaliza os valores para o algoritmo (H: 0-360, S/V: 0-1)
                 result.as.color_val = hsv_to_rgb((float)h_val.as.int_val, (float)s_val.as.int_val, (float)v_val.as.int_val);
             } else {
-                result.as.color_val = (ColorRGB){0,0,0}; // Preto em caso de erro
+                result.as.color_val = (ColorRGB){0,0,0};
             }
             break;
         }
@@ -269,7 +264,7 @@ Value evaluate_expression(InterpreterState* state, AstNode* node) {
             Value right = evaluate_expression(state, bin_op->right);
 
             if (left.type == VAL_INT && right.type == VAL_INT) {
-                // Operações que retornam um booleano (verdadeiro/falso)
+                // BoolExpressions
                 if (bin_op->op == EQ || bin_op->op == NEQ || bin_op->op == '<' || bin_op->op == '>' || bin_op->op == LE || bin_op->op == GE) {
                     result.type = VAL_BOOL;
                     switch(bin_op->op) {
@@ -280,14 +275,14 @@ Value evaluate_expression(InterpreterState* state, AstNode* node) {
                         case LE:  result.as.bool_val = (left.as.int_val <= right.as.int_val); break;
                         case GE:  result.as.bool_val = (left.as.int_val >= right.as.int_val); break;
                     }
-                } else { // Operações aritméticas que retornam um inteiro
+                } else { // BinOp
                     result.type = VAL_INT;
                     switch(bin_op->op) {
                         case '+': result.as.int_val = left.as.int_val + right.as.int_val; break;
                         case '-': result.as.int_val = left.as.int_val - right.as.int_val; break;
                         case '*': result.as.int_val = left.as.int_val * right.as.int_val; break;
-                        
-                        // Caso da Divisão com verificação
+                    
+                        // divisao por zero 
                         case '/':
                             if (right.as.int_val == 0) {
                                 fprintf(stderr, "\nErro de Execução: Divisão por zero.\n");
@@ -296,7 +291,7 @@ Value evaluate_expression(InterpreterState* state, AstNode* node) {
                             result.as.int_val = left.as.int_val / right.as.int_val;
                             break;
 
-                        // Caso do Módulo com verificação
+                        // modulo por zero
                         case '%':
                             if (right.as.int_val == 0) {
                                 fprintf(stderr, "\nErro de Execução: Divisão por zero (operação módulo).\n");
@@ -317,11 +312,11 @@ Value evaluate_expression(InterpreterState* state, AstNode* node) {
     return result;
 }
 
-// --- Funções da Tabela de Símbolos ---
+// funcoes da Symbol Table
 
 void symbol_set(InterpreterState* state, char* name, Value value) {
     Symbol* current = state->symbol_table;
-    // Primeiro, verifica se o símbolo já existe para atualizá-lo
+    //verifica se o simbolo ja existe para atualizar
     while (current != NULL) {
         if (strcmp(current->name, name) == 0) {
             current->value = value;
@@ -330,7 +325,7 @@ void symbol_set(InterpreterState* state, char* name, Value value) {
         current = current->next;
     }
     
-    // Se não existe, cria um novo e adiciona no início da lista
+    // se nao existe, cria um novo e adiciona no inicio da lista
     Symbol* new_sym = (Symbol*)malloc(sizeof(Symbol));
     new_sym->name = strdup(name);
     new_sym->value = value;
@@ -347,12 +342,8 @@ Value symbol_get(InterpreterState* state, char* name) {
         current = current->next;
     }
 
-    // Se não encontrou, retorna 0 por padrão
-    fprintf(stderr, "Aviso: Variável '%s' não encontrada. Usando valor 0.\n", name);
-    Value default_val;
-    default_val.type = VAL_INT;
-    default_val.as.int_val = 0;
-    return default_val;
+    fprintf(stderr, "\nErro de Execução: Variável '%s' não foi definida.\n", name);
+    exit(1);
 }
 
 void free_symbol_table(Symbol* table) {
@@ -364,10 +355,8 @@ void free_symbol_table(Symbol* table) {
     }
 }
 
-// --- Funções de Conversão de Cor ---
+// --- conversoes de cor ---
 
-// Converte de HSV (Hue, Saturation, Value) para RGB
-// h: 0-359, s: 0-1, v: 0-1 (usaremos int para simplificar e converteremos internamente)
 ColorRGB hsv_to_rgb(float h, float s, float v) {
     float C = v * s;
     float H_prime = fmod(h / 60.0, 6);

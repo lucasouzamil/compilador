@@ -1,0 +1,16 @@
+strip 60
+offset = 0
+
+loop forever {
+    for i = 0..59 {
+        if ((i + offset) % 3 == 0) {
+            set i color #FFFFFF
+        } else {
+            set i color #111111
+        }
+    }
+
+    offset = offset + 1
+
+    wait 100ms
+}

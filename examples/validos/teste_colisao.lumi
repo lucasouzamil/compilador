@@ -1,0 +1,32 @@
+strip 60
+tam = 59 
+
+p1 = 0
+d1 = 1
+p2 = 59
+d2 = -1
+
+loop forever {
+    set p1 color #00FFFF 
+    set p2 color #FF00FF 
+    
+    wait 40ms
+
+    set p1 color #000000
+    set p2 color #000000
+    
+    p1 = p1 + d1
+    p2 = p2 + d2
+    
+    if (p1 >= p2) {
+        d1 = -1
+        d2 = 1
+    }
+
+    if (p1 <= 0) {
+        d1 = 1
+    }
+    if (p2 >= tam) {
+        d2 = -1
+    }
+}

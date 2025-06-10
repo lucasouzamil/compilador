@@ -1,0 +1,40 @@
+strip 40
+tam = 39
+
+pos = 0
+direcao = 1
+
+loop forever {
+    for i = 0..tam {
+        set i color #000000
+    }
+
+    set pos color #FF0000 
+
+    if (direcao == 1) { 
+        if (pos > 0) {
+            set pos-1 color #880000
+        }
+        if (pos > 1) {
+            set pos-2 color #330000
+        }
+    } else { 
+        if (pos < tam) {
+            set pos+1 color #880000
+        }
+        if (pos < tam-1) {
+            set pos+2 color #330000
+        }
+    }
+    
+    pos = pos + direcao
+
+    if (pos >= tam) {
+        direcao = -1
+    }
+    if (pos <= 0) {
+        direcao = 1
+    }
+
+    wait 40ms
+}

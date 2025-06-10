@@ -1,6 +1,9 @@
+%option noinput
+%option nounput
+
 %{
 #include "ast.h"
-#include "leds.tab.h"
+#include "lumi.tab.h"
 #include <stdlib.h>
 #include <string.h>
 

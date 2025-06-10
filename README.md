@@ -23,12 +23,12 @@ Aqui está um exemplo de código simples:
 strip 60
 
 for i = 0..59 {
-    set i color hsv(i*4, 1, 1)
+  set i color hsv(i*4, 1, 1)
 }
 
 loop forever {
-    rotate 1 dir right
-    wait 50ms
+  rotate 1 dir right
+  wait 50ms
 }
 ```
 

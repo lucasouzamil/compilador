@@ -1,6 +1,6 @@
-strip 100
+strip 150
 
-for i = 0..200 {
+for i = 0..149 {
   set i color hsv(i*4, 1, 1)
 }
 

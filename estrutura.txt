@@ -1,46 +1,48 @@
 .
-├── EBNF.txt
+├── build
+├── doc
+│   └── EBNF.txt
 ├── estrutura.txt
-├── flex-bison
-│   ├── ast.h
-│   ├── exemplos
-│   │   ├── invalidos
-│   │   │   ├── lexicos
-│   │   │   │   ├── caractere_invalido.led
-│   │   │   │   ├── delimitador_estranho.led
-│   │   │   │   ├── identificador_invalido.led
-│   │   │   │   ├── numero_invalido.led
-│   │   │   │   ├── operador_malformado.led
-│   │   │   │   └── token_malformado.led
-│   │   │   ├── semanticos
-│   │   │   │   ├── divisao_por_zero.led
-│   │   │   │   ├── indice_fora.led
-│   │   │   │   ├── loop_vazio.led
-│   │   │   │   ├── redimensionamento_perigoso.led
-│   │   │   │   ├── sem_strip.led
-│   │   │   │   ├── tipo_incompativel.led
-│   │   │   │   └── variavel_nao_definida.led
-│   │   │   └── sintaticos
-│   │   │       ├── bloco_incompleto.led
-│   │   │       ├── condicao_invalida.led
-│   │   │       ├── else_solto.led
-│   │   │       ├── expressao_incompleta.led
-│   │   │       ├── ordem_errada.led
-│   │   │       ├── ponto_virgula_errado.led
-│   │   │       └── set_sem_color.led
-│   │   └── validos
-│   │       ├── exemplo_readme.led
-│   │       ├── knight_rider.led
-│   │       ├── teste_colisao.led
-│   │       └── teste_padrao_modulo.led
-│   ├── interpreter.c
-│   ├── interpreter.h
-│   ├── leds.l
-│   ├── leds.y
-│   ├── Makefile
-│   ├── README.md
-│   ├── simulator.c
-│   └── simulator.h
-└── README.md
+├── examples
+│   ├── invalidos
+│   │   ├── lexicos
+│   │   │   ├── caractere_invalido.lumi
+│   │   │   ├── delimitador_estranho.lumi
+│   │   │   ├── identificador_invalido.lumi
+│   │   │   ├── numero_invalido.lumi
+│   │   │   ├── operador_malformado.lumi
+│   │   │   └── token_malformado.lumi
+│   │   ├── semanticos
+│   │   │   ├── divisao_por_zero.lumi
+│   │   │   ├── indice_fora.lumi
+│   │   │   ├── loop_vazio.lumi
+│   │   │   ├── redimensionamento_perigoso.lumi
+│   │   │   ├── sem_strip.lumi
+│   │   │   ├── tipo_incompativel.lumi
+│   │   │   └── variavel_nao_definida.lumi
+│   │   └── sintaticos
+│   │       ├── bloco_incompleto.lumi
+│   │       ├── condicao_invalida.lumi
+│   │       ├── else_solto.lumi
+│   │       ├── expressao_incompleta.lumi
+│   │       ├── ordem_errada.lumi
+│   │       ├── ponto_virgula_errado.lumi
+│   │       └── set_sem_color.lumi
+│   └── validos
+│       ├── exemplo_readme.led
+│       ├── knight_rider.led
+│       ├── teste_colisao.led
+│       └── teste_padrao_modulo.led
+├── Makefile
+├── README.md
+└── src
+    ├── ast.h
+    ├── interpreter.c
+    ├── interpreter.h
+    ├── lumi.l
+    ├── lumi.y
+    ├── main.c
+    ├── simulator.c
+    └── simulator.h
 
-7 directories, 36 files
+9 directories, 36 files
