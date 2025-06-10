@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Forward declaration
 typedef struct AstNode AstNode;
 
 typedef enum {
@@ -136,8 +135,8 @@ typedef struct {
     AstNode* v_expr;
 } HsvColorNode;
 
-/* Protótipos das funções construtoras da AST */
+/* portotipos das funcoes construtoras da AST */
 AstNode* create_binary_op(int op, AstNode* left, AstNode* right);
 AstNode* create_set_command(AstNode* index, AstNode* color);
 
-#endif // AST_H
+#endif 
