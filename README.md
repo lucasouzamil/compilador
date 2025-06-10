@@ -47,7 +47,7 @@ O projeto utiliza um Makefile que automatiza todo o processo de compilação.
 Clone o repositório:
 
 ```bash
-git clone https://github.com/dolthub/dolt
+git clone https://github.com/lucasouzamil/compilador
 cd [pasta-do-projeto]
 ```
 
