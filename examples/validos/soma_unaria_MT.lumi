@@ -1,0 +1,76 @@
+strip 60
+
+a = 5
+b = 3
+
+estado_tm = 0
+cabeca_tm = 0
+toggle_fim = 0
+
+for i = 0..(a-1) {
+    set i color #FFFFFF
+}
+for i = a+1..(a+b) {
+    set i color #FFFFFF
+}
+
+loop forever {
+    if (estado_tm == 0) {
+        set cabeca_tm color #FF0000
+        wait 500ms
+        set cabeca_tm color #FFFFFF
+
+        cabeca_tm = cabeca_tm + 1
+
+        if (cabeca_tm == a) {
+            estado_tm = 1
+        }
+    }
+
+    if (estado_tm == 1) {
+        set cabeca_tm color #FF0000
+        wait 500ms
+        set cabeca_tm color #FFFFFF
+        estado_tm = 2
+    }
+
+    if (estado_tm == 2) {
+        set cabeca_tm color #FF0000
+        wait 500ms
+        set cabeca_tm color #FFFFFF
+
+        cabeca_tm = cabeca_tm + 1
+
+        if (cabeca_tm == a+b+1) {
+            estado_tm = 3
+        }
+    }
+
+    if (estado_tm == 3) {
+        set cabeca_tm color #000000
+        cabeca_tm = cabeca_tm - 1
+        estado_tm = 4
+    }
+
+    if (estado_tm == 4) {
+        set cabeca_tm color #FF0000
+        wait 500ms
+        set cabeca_tm color #000000
+        estado_tm = 5
+    }
+
+    if (estado_tm == 5) {
+        if (toggle_fim == 0) {
+            for i = 0..(a+b-1) {
+                set i color #555555
+            }
+            toggle_fim = 1
+        } else {
+            for i = 0..(a+b-1) {
+                set i color #FFFFFF
+            }
+            toggle_fim = 0
+        }
+        wait 500ms
+    }
+}

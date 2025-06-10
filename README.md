@@ -1,6 +1,6 @@
 # Lumi - Uma Linguagem para Coreografia de Luzes
 
-**Autor:** (Lucas Lima)[]
+**Autor:** [Lucas Lima](https://github.com/lucasouzamil)
 
 Lumi é uma linguagem de programação declarativa e de alto nível, projetada para simplificar a criação de animações complexas e coreografias de luz para fitas de LED endereçáveis. O projeto foi desenvolvido como parte dos requisitos da disciplina Lógica da Computação, do curso de Engenharia da Computação no Insper, abrangendo todas as etapas da construção de uma linguagem, desde a especificação formal até a execução de programas em uma máquina virtual (VM) customizada.
 
@@ -78,7 +78,7 @@ make
 
 ## 3. Estrutura do Projeto
 
-O projeto é organizado em uma estrutura de pastas clara:
+O projeto é organizado na seguinte estrutura:
 
 ```
 .
@@ -167,3 +167,17 @@ A estrutura geral do projeto se manteria quase inalterada. A principal diferenç
 * **Entrada**: `meu_efeito.lumi`
 * **Execução**: `./bin/lumi ./examples/validos/meu_efeito.lumi`
 * **Saída**: Um novo arquivo `meu_efeito.ino`, pronto para ser aberto na IDE do Arduino e enviado para a placa
+
+## 7. CURIOSIDADE (Exemplo Avançado): Simulação de Máquina de Turing
+
+Para demonstrar que a Lumi, apesar de simples, é computacionalmente completa, foi desenvolvido um algoritmo que simula a operação de uma Máquina de Turing para resolver o problema da **soma unária** (`a + b`).
+
+Como a Lumi não possui um comando para "ler" o estado de um LED, a simulação não reage à fita. Em vez disso, ela usa variáveis para controlar o estado e a posição da cabeça, utilizando a fita de LED apenas como um **display visual** do processo computacional.
+
+### O Problema
+
+Dada uma entrada como `a = 5`, `b = 3` (representada na fita como `111110111`), a máquina deve computar a soma e apresentar o resultado `8` (representado como `11111111`).
+
+**Código de Exemplo**: `./examples/validos/soma_unaria_MT.lumi`
+
+![Execucao Soma Unaria](doc/imgs/MT.gif)
