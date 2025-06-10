@@ -1,0 +1,4 @@
+strip 60
+set 0 color #GG00FF // 'G' não é um dígito hexadecimal válido
+
+// Erro esperado: O analisador léxico não reconhecerá #GG00FF como uma cor válida, resultando em um erro sintático do parser.

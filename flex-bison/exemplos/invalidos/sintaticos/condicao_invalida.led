@@ -1,0 +1,7 @@
+strip 10
+pos = 5
+if pos > 0 { // Faltam os parênteses em torno da condição
+    set pos color #00FF00
+}
+
+// Erro esperado: O analisador sintático deve falhar com "syntax error", pois a gramática do 'if' exige parênteses na expressão booleana.

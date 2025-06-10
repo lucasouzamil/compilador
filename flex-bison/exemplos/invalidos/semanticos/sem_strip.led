@@ -1,0 +1,6 @@
+// Este arquivo não possui o comando "strip"
+set 10 color #FF0000
+wait 1s
+rotate 1 dir left
+
+// Erro esperado: O programa deve compilar, mas o interpretador não fará nada (falha silenciosa), pois a fita não foi inicializada e seu tamanho é 0.

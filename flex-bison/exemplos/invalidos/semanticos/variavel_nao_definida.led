@@ -1,0 +1,5 @@
+strip 30
+pos = x + 10 // A variável 'x' nunca foi definida
+set pos color #FFFFFF
+
+// Erro esperado: O programa deve compilar. Em tempo de execução, o interpretador deve imprimir um aviso no terminal como "Aviso: Variável 'x' não encontrada. Usando valor 0."

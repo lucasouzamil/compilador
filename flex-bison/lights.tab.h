@@ -91,12 +91,15 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 14 "lights.y"
+#line 41 "lights.y"
 
-  int   ival;   /* números inteiros               */
-  char *sval;   /* identificadores, literais etc. */
+  int           ival;
+  char* sval;
+  AstNode* node;       /* Ponteiro para um nó genérico da AST */
+  NodeList* list;       /* Ponteiro para uma lista de statements */
+  DirectionType dir_val;    /* Enum para direção (left/right) */
 
-#line 100 "lights.tab.h"
+#line 103 "lights.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

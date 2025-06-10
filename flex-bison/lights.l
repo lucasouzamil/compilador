@@ -1,4 +1,5 @@
 %{
+#include "ast.h"
 #include "lights.tab.h"
 #include <stdlib.h>
 #include <string.h>

@@ -1,0 +1,6 @@
+strip 60
+set 10 color #FF0000
+wait 500ms
+@ // caractere invalido
+loop forever {}
+// Erro esperado: O analisador léxico deve falhar e imprimir "Caractere inválido: @"

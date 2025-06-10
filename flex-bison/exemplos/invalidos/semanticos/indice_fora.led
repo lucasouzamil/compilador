@@ -1,0 +1,4 @@
+strip 20
+set 50 color #FFFFFF // Índice 50 está fora do alcance da fita (0-19)
+
+// Erro esperado: O programa deve compilar e rodar sem quebrar. O comando 'set 50' será silenciosamente ignorado pela lógica de verificação de limites do interpretador.

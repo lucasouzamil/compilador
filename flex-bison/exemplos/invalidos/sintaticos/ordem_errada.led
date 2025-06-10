@@ -1,0 +1,4 @@
+strip 10
+rotate dir right 1 // Ordem dos argumentos está errada
+
+// Erro esperado: O analisador sintático deve falhar com "syntax error", pois a ordem dos argumentos para o comando 'rotate' está incorreta.

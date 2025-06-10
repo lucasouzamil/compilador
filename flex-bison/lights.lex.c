@@ -1,5 +1,6 @@
+#line 2 "lights.lex.c"
 
-#line 3 "lex.yy.c"
+#line 4 "lights.lex.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -511,15 +512,16 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "lights.l"
 #line 2 "lights.l"
+#include "ast.h"
 #include "lights.tab.h"
 #include <stdlib.h>
 #include <string.h>
 
 #define SET_INT(v)  (yylval.ival = (v))
 #define SET_STR(v)  (yylval.sval = strdup(v))
-#line 521 "lex.yy.c"
+#line 523 "lights.lex.c"
 /* ----------  TOKENS  ---------- */
-#line 523 "lex.yy.c"
+#line 525 "lights.lex.c"
 
 #define INITIAL 0
 
@@ -736,9 +738,9 @@ YY_DECL
 		}
 
 	{
-#line 11 "lights.l"
+#line 12 "lights.l"
 
-#line 742 "lex.yy.c"
+#line 744 "lights.lex.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -797,246 +799,246 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 12 "lights.l"
+#line 13 "lights.l"
 ;                       /* espaços            */
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 13 "lights.l"
+#line 14 "lights.l"
 ;                       /* comentários linha  */
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 14 "lights.l"
+#line 15 "lights.l"
 { return NEWLINE; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 16 "lights.l"
+#line 17 "lights.l"
 { return T_STRIP; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 17 "lights.l"
+#line 18 "lights.l"
 { return T_IF; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 18 "lights.l"
+#line 19 "lights.l"
 { return T_ELSE; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 19 "lights.l"
+#line 20 "lights.l"
 { return T_WHILE; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 20 "lights.l"
+#line 21 "lights.l"
 { return T_FOR; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 21 "lights.l"
+#line 22 "lights.l"
 { return T_LOOP; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 22 "lights.l"
+#line 23 "lights.l"
 { return T_FOREVER; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 23 "lights.l"
+#line 24 "lights.l"
 { return T_SET; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 24 "lights.l"
+#line 25 "lights.l"
 { return T_COLOR; }     
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 25 "lights.l"
+#line 26 "lights.l"
 { return T_WAIT; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 26 "lights.l"
+#line 27 "lights.l"
 { return T_ROTATE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 27 "lights.l"
+#line 28 "lights.l"
 { return T_DIR; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 28 "lights.l"
+#line 29 "lights.l"
 { return T_FADE; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 29 "lights.l"
+#line 30 "lights.l"
 { return T_HSV; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 30 "lights.l"
+#line 31 "lights.l"
 { return T_LEFT; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 31 "lights.l"
+#line 32 "lights.l"
 { return T_RIGHT; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 33 "lights.l"
+#line 34 "lights.l"
 { return EQ;  }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 34 "lights.l"
+#line 35 "lights.l"
 { return NEQ; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 35 "lights.l"
+#line 36 "lights.l"
 { return LE;  }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 36 "lights.l"
+#line 37 "lights.l"
 { return GE;  }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 37 "lights.l"
+#line 38 "lights.l"
 { return AND; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 38 "lights.l"
+#line 39 "lights.l"
 { return OR;  }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 39 "lights.l"
+#line 40 "lights.l"
 { return DOTDOT; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 41 "lights.l"
+#line 42 "lights.l"
 { SET_STR(yytext); return COLOR_HEX; }   /* cor #RRGGBB */
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 42 "lights.l"
+#line 43 "lights.l"
 { SET_STR(yytext); return TIME_LIT; }    /* tempo em ms */
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 43 "lights.l"
+#line 44 "lights.l"
 { SET_STR(yytext); return TIME_LIT; }    /* tempo em  s */
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 45 "lights.l"
+#line 46 "lights.l"
 { SET_INT(atoi(yytext)); return INT; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 47 "lights.l"
+#line 48 "lights.l"
 { return '+'; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 48 "lights.l"
+#line 49 "lights.l"
 { return '-'; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 49 "lights.l"
+#line 50 "lights.l"
 { return '*'; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 50 "lights.l"
+#line 51 "lights.l"
 { return '/'; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 51 "lights.l"
+#line 52 "lights.l"
 { return '%'; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 52 "lights.l"
+#line 53 "lights.l"
 { return '!'; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 53 "lights.l"
+#line 54 "lights.l"
 { return '<'; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 54 "lights.l"
+#line 55 "lights.l"
 { return '>'; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 55 "lights.l"
+#line 56 "lights.l"
 { return '='; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 56 "lights.l"
+#line 57 "lights.l"
 { return '('; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 57 "lights.l"
+#line 58 "lights.l"
 { return ')'; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 58 "lights.l"
+#line 59 "lights.l"
 { return '{'; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 59 "lights.l"
+#line 60 "lights.l"
 { return '}'; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 60 "lights.l"
+#line 61 "lights.l"
 { return ','; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 61 "lights.l"
+#line 62 "lights.l"
 { return ';'; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 63 "lights.l"
+#line 64 "lights.l"
 { SET_STR(yytext); return ID; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 65 "lights.l"
+#line 66 "lights.l"
 { fprintf(stderr,"Caractere inválido: %s\n",yytext); }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 66 "lights.l"
+#line 67 "lights.l"
 ECHO;
 	YY_BREAK
-#line 1040 "lex.yy.c"
+#line 1042 "lights.lex.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2041,7 +2043,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 66 "lights.l"
+#line 67 "lights.l"
 
 
 int yywrap(void) { return 1; }

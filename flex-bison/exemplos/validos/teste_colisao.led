@@ -1,0 +1,44 @@
+// Recursos Testados: Múltiplas variáveis, if/else, operadores lógicos e de comparação (==, >), aritmética (+, -), e sequenciamento de lógica complexa.
+
+strip 60
+
+// Scanner 1 (Ciano)
+p1 = 0
+d1 = 1
+
+// Scanner 2 (Magenta)
+p2 = 59
+d2 = -1
+
+loop forever {
+    // Apaga a cauda dos scanners
+    set p1 - (2*d1) color #000000
+    set p2 - (2*d2) color #000000
+
+    // Desenha os scanners
+    set p1 color #00FFFF // Ciano
+    set p1 - d1 color #008888
+    
+    set p2 color #FF00FF // Magenta
+    set p2 - d2 color #880088
+
+    // Atualiza as posições
+    p1 = p1 + d1
+    p2 = p2 + d2
+
+    // Condição de colisão no meio
+    if (p1 > p2) {
+        d1 = -1
+        d2 = 1
+    }
+
+    // Condições das bordas
+    if (p1 < 0) {
+        d1 = 1
+    }
+    if (p2 > 59) {
+        d2 = -1
+    }
+
+    wait 30ms
+}

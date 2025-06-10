@@ -1,0 +1,5 @@
+strip 10
+
+loop forever {
+    rotate 1 dir right
+// Erro esperado: O analisador sintático deve falhar com "syntax error", pois o bloco '{' nunca é fechado com '}'.
