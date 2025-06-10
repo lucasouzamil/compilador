@@ -1,0 +1,17 @@
+strip 10
+i = 0
+
+loop forever {
+    set i color hsv(i * 30, 1, 1)
+    i = i + 1
+
+    if (i == 5) {
+        // Quando i=5, a fita é redimensionada para apenas 5 LEDs (índices 0-4).
+        strip 5 
+    }
+    wait 200ms
+}
+// Erro esperado: O programa rodará por 5 quadros. No 6º quadro, 'i' será 6.
+// O comando 'set i ...' tentará acessar o LED 6. Como a fita agora só tem
+// tamanho 5, o interpretador deve parar e imprimir o erro que criamos:
+// "Erro de Execução: Índice de LED fora dos limites."

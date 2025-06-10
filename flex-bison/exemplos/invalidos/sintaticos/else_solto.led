@@ -1,0 +1,9 @@
+strip 20
+
+// Um 'else' não pode existir sem um 'if' antes dele.
+else {
+    set 0 color #FF0000
+}
+
+// Erro esperado: O analisador sintático deve falhar com uma mensagem como:
+// "Erro sintático: syntax error, unexpected T_ELSE"

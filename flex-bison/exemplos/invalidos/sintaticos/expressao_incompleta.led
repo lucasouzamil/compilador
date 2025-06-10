@@ -1,0 +1,6 @@
+strip 10
+minha_variavel = 5 + 
+
+// Erro esperado: O parser processa "5" e "+", e então espera outra expressão.
+// Ao encontrar o fim da linha (NEWLINE) em vez de um número ou variável,
+// ele deve reportar um erro como: "Erro sintático: syntax error, unexpected NEWLINE"

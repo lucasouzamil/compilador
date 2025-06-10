@@ -1,0 +1,10 @@
+strip 10
+
+// A sintaxe do for está correta, mas o tipo do limite final é uma COR, não um NÚMERO.
+for i = 0..#FF0000 {
+    set i color #00FF00
+}
+
+// Erro esperado: O programa deve compilar e rodar sem quebrar. No entanto,
+// o loop 'for' não será executado nenhuma vez, pois o interpretador espera
+// que os limites sejam inteiros. Nenhum LED deve acender.

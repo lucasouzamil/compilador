@@ -1,0 +1,9 @@
+strip 10
+// A sintaxe está correta, mas a semântica é impossível.
+divisor = 0
+resultado = 10 / divisor
+set resultado color #FFFFFF
+
+// Erro esperado: Crash do programa. O interpretador, ao tentar executar a
+// divisão por zero do C, receberá um erro do sistema operacional e será
+// encerrado à força.

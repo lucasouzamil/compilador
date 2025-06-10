@@ -1,0 +1,6 @@
+strip 20
+set 10 color #FFFFFF; // Ponto-e-vírgula não é usado como terminador de comando.
+
+// Erro esperado: O parser, após processar o comando 'set', espera um NEWLINE.
+// Em vez disso, ele receberá o token ';'. O erro será algo como:
+// "Erro sintático: syntax error, unexpected ';', expecting NEWLINE"

@@ -1,0 +1,12 @@
+strip 10
+set 0 color #FF0000 // Este LED deve acender
+
+// A condição de parada (i <= 1) é imediatamente falsa para o valor inicial (i = 10).
+for i = 10..1 {
+    set i color #00FF00 // Este código nunca deve ser executado
+}
+
+set 1 color #0000FF // Este LED também deve acender
+
+// Erro esperado: Nenhum erro. O programa deve simplesmente pular o corpo do loop 'for'.
+// O resultado final na fita deve ser o LED 0 vermelho e o LED 1 azul.

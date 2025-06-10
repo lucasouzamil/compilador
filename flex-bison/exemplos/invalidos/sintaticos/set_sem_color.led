@@ -1,0 +1,8 @@
+strip 30
+
+// Falta a palavra-chave 'color' entre o índice e o valor da cor.
+set 5 #00FF00
+
+// Erro esperado: O parser, após ler a expressão '5', espera o token T_COLOR.
+// Em vez disso, ele recebe um COLOR_HEX, resultando em um erro como:
+// "Erro sintático: syntax error, unexpected COLOR_HEX, expecting T_COLOR"

@@ -6,7 +6,7 @@
 
 #include "interpreter.h"
 #include "simulator.h"
-#include "lights.tab.h"
+#include "leds.tab.h"
 
 // --- Funções Auxiliares (protótipos) ---
 void symbol_set(InterpreterState* state, char* name, Value value);
@@ -70,13 +70,16 @@ void execute_statement(InterpreterState* state, AstNode* node) {
 
             if (index_val.type == VAL_INT && color_val.type == VAL_COLOR) {
                 int index = index_val.as.int_val;
-                if (index >= 0 && index < state->strip_size) {
-                    state->strip_leds[index] = color_val.as.color_val;
+
+                // 1. Verifica se o índice está FORA dos limites
+                if (index < 0 || index >= state->strip_size) {
+                    fprintf(stderr, "\nErro de Execução: Índice de LED fora dos limites.\n");
+                    fprintf(stderr, "  > Tentativa de acessar o LED %d em uma fita de tamanho %d (índices válidos: 0 a %d).\n", index, state->strip_size, state->strip_size - 1);
+                    
+                    exit(1); 
                 }
-                //printf("Interpretador: Setando LED %d ...\n", index);
-            } else {
-                // ADICIONE ESTE BLOCO ELSE
-                //printf("DEBUG: Falha na condição do SET_CMD. Tipo do índice: %d, Tipo da cor: %d\n", index_val.type, color_val.type);
+
+                state->strip_leds[index] = color_val.as.color_val;
             }
             break;
         }
@@ -112,29 +115,30 @@ void execute_statement(InterpreterState* state, AstNode* node) {
         }
 
         case NODE_TYPE_FOR_STMT: {
-            //printf("DEBUG: Entrando no FOR_STMT.\n");
             ForStmtNode* for_node = (ForStmtNode*)node;
             Value start_val = evaluate_expression(state, for_node->start_expr);
             Value end_val = evaluate_expression(state, for_node->end_expr);
 
-            if (start_val.type == VAL_INT && end_val.type == VAL_INT) {
-                for (int i = start_val.as.int_val; i <= end_val.as.int_val; i++) {
-                    //printf("DEBUG: Loop for, i = %d\n", i);
-                    // Define/atualiza a variável de loop na tabela de símbolos
-                    Value loop_var_val;
-                    loop_var_val.type = VAL_INT;
-                    loop_var_val.as.int_val = i;
-                    symbol_set(state, for_node->identifier, loop_var_val);
-
-                    // Executa o corpo do loop
-                    NodeList* body = for_node->block;
-                    while (body != NULL) {
-                        execute_statement(state, body->node);
-                        body = body->next;
-                    }
-                }
-                simulator_draw_strip(state);
+            // Verifica se os tipos dos limites estão corretos
+            if (start_val.type != VAL_INT || end_val.type != VAL_INT) {
+                fprintf(stderr, "\nErro de Execução: Os limites do loop 'for' devem ser números inteiros.\n");
+                exit(1);
             }
+            
+            // Se chegou aqui, os tipos estão corretos e podemos prosseguir
+            for (int i = start_val.as.int_val; i <= end_val.as.int_val; i++) {
+                Value loop_var_val;
+                loop_var_val.type = VAL_INT;
+                loop_var_val.as.int_val = i;
+                symbol_set(state, for_node->identifier, loop_var_val);
+
+                NodeList* body = for_node->block;
+                while (body != NULL) {
+                    execute_statement(state, body->node);
+                    body = body->next;
+                }
+            }
+            simulator_draw_strip(state);
             break;
         }
         
@@ -282,8 +286,24 @@ Value evaluate_expression(InterpreterState* state, AstNode* node) {
                         case '+': result.as.int_val = left.as.int_val + right.as.int_val; break;
                         case '-': result.as.int_val = left.as.int_val - right.as.int_val; break;
                         case '*': result.as.int_val = left.as.int_val * right.as.int_val; break;
-                        case '/': result.as.int_val = left.as.int_val / right.as.int_val; break;
-                        case '%': result.as.int_val = left.as.int_val % right.as.int_val; break;
+                        
+                        // Caso da Divisão com verificação
+                        case '/':
+                            if (right.as.int_val == 0) {
+                                fprintf(stderr, "\nErro de Execução: Divisão por zero.\n");
+                                exit(1);
+                            }
+                            result.as.int_val = left.as.int_val / right.as.int_val;
+                            break;
+
+                        // Caso do Módulo com verificação
+                        case '%':
+                            if (right.as.int_val == 0) {
+                                fprintf(stderr, "\nErro de Execução: Divisão por zero (operação módulo).\n");
+                                exit(1);
+                            }
+                            result.as.int_val = left.as.int_val % right.as.int_val;
+                            break;
                     }
                 }
             }

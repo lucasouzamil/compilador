@@ -1,0 +1,46 @@
+.
+├── EBNF.txt
+├── estrutura.txt
+├── flex-bison
+│   ├── ast.h
+│   ├── exemplos
+│   │   ├── invalidos
+│   │   │   ├── lexicos
+│   │   │   │   ├── caractere_invalido.led
+│   │   │   │   ├── delimitador_estranho.led
+│   │   │   │   ├── identificador_invalido.led
+│   │   │   │   ├── numero_invalido.led
+│   │   │   │   ├── operador_malformado.led
+│   │   │   │   └── token_malformado.led
+│   │   │   ├── semanticos
+│   │   │   │   ├── divisao_por_zero.led
+│   │   │   │   ├── indice_fora.led
+│   │   │   │   ├── loop_vazio.led
+│   │   │   │   ├── redimensionamento_perigoso.led
+│   │   │   │   ├── sem_strip.led
+│   │   │   │   ├── tipo_incompativel.led
+│   │   │   │   └── variavel_nao_definida.led
+│   │   │   └── sintaticos
+│   │   │       ├── bloco_incompleto.led
+│   │   │       ├── condicao_invalida.led
+│   │   │       ├── else_solto.led
+│   │   │       ├── expressao_incompleta.led
+│   │   │       ├── ordem_errada.led
+│   │   │       ├── ponto_virgula_errado.led
+│   │   │       └── set_sem_color.led
+│   │   └── validos
+│   │       ├── exemplo_readme.led
+│   │       ├── knight_rider.led
+│   │       ├── teste_colisao.led
+│   │       └── teste_padrao_modulo.led
+│   ├── interpreter.c
+│   ├── interpreter.h
+│   ├── leds.l
+│   ├── leds.y
+│   ├── Makefile
+│   ├── README.md
+│   ├── simulator.c
+│   └── simulator.h
+└── README.md
+
+7 directories, 36 files

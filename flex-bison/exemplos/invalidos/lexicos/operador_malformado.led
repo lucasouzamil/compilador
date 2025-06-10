@@ -1,0 +1,10 @@
+strip 10
+x = 5
+if (x => 5) { // O operador '=>' não existe. O correto seria '>='.
+  set 0 color #FFFFFF
+}
+
+// Erro esperado: O lexer identificará o '=' como um token. Em seguida,
+// o '>' será visto pelo parser como um erro sintático, pois ele não
+// espera um '>' depois de um '=' em uma expressão.
+// A saída será: "Erro sintático: syntax error, unexpected '>'"

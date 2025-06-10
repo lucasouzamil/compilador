@@ -1,0 +1,5 @@
+strip 30
+&minha_variavel = 10 // O caractere '&' não é permitido no início de um nome de variável.
+
+// Erro esperado: O analisador léxico deve falhar imediatamente ao encontrar o '&'
+// e imprimir a mensagem: "Caractere inválido: &"

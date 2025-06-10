@@ -1,6 +1,6 @@
 %{
 #include "ast.h"
-#include "lights.tab.h"
+#include "leds.tab.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -63,7 +63,7 @@
 
 [a-zA-Z_][a-zA-Z0-9_]*   { SET_STR(yytext); return ID; }
 
-.                        { fprintf(stderr,"Caractere inválido: %s\n",yytext); }
+.    { fprintf(stderr, "Caractere inválido: %s\n", yytext); exit(1); }
 %%
 
 int yywrap(void) { return 1; }

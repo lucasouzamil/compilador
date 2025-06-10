@@ -1,12 +1,12 @@
 CC = gcc
 CFLAGS = -g -Wall
-TARGET = lights_parser
+TARGET = leds_parser
 LIBS = -lfl -lm
 
 # Adicione os novos arquivos .c
-C_SOURCES = lights.tab.c lights.lex.c interpreter.c simulator.c
+C_SOURCES = leds.tab.c leds.lex.c interpreter.c simulator.c
 # Adicione os novos arquivos .h como dependências
-H_SOURCES = lights.tab.h ast.h interpreter.h simulator.h
+H_SOURCES = leds.tab.h ast.h interpreter.h simulator.h
 
 # Gera os .o a partir dos .c
 OBJECTS = $(C_SOURCES:.c=.o)
@@ -20,11 +20,11 @@ $(TARGET): $(OBJECTS)
 %.o: %.c $(H_SOURCES)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-lights.tab.c lights.tab.h: lights.y ast.h
-	bison -d lights.y
+leds.tab.c leds.tab.h: leds.y ast.h
+	bison -d leds.y
 
-lights.lex.c: lights.l lights.tab.h
-	flex -o lights.lex.c lights.l
+leds.lex.c: leds.l leds.tab.h
+	flex -o leds.lex.c leds.l
 
 clean:
-	rm -f $(TARGET) $(OBJECTS) lights.tab.c lights.lex.c lights.tab.h
+	rm -f $(TARGET) $(OBJECTS) leds.tab.c leds.lex.c leds.tab.h lex.yy.c

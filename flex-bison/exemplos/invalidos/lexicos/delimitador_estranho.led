@@ -1,0 +1,7 @@
+strip 10
+set 5 color #FF0000
+set 6 $ color #00FF00
+
+// Erro esperado: O lexer processará "set" e "6" corretamente.
+// Em seguida, encontrará o '$' e encerrará o programa com a
+// mensagem: "Caractere inválido: $"

@@ -1,0 +1,6 @@
+// A linguagem só suporta números inteiros.
+strip 20.5
+
+// Erro esperado: O lexer irá processar "20" como um token INT válido.
+// Em seguida, encontrará o '.', que não corresponde a nenhuma regra.
+// O programa será encerrado com a mensagem: "Caractere inválido: ."
