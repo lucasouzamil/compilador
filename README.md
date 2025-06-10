@@ -48,7 +48,7 @@ Clone o repositório:
 
 ```bash
 git clone https://github.com/lucasouzamil/compilador
-cd [pasta-do-projeto]
+cd compilador
 ```
 
 Compile o projeto:
