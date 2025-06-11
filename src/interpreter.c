@@ -42,7 +42,7 @@ void interpret(NodeList* ast_root) {
 }
 
 
-// --- Executor de Statements ---
+// statements 
 void execute_statement(InterpreterState* state, AstNode* node) {
     if (!state->is_running || !node) return;
 

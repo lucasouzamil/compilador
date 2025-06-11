@@ -2,6 +2,8 @@
 
 **Autor:** [Lucas Lima](https://github.com/lucasouzamil)
 
+**Vídeo de apresentação:** [YouTube](https://youtu.be/XHkaLBllQ3w)
+
 Lumi é uma linguagem de programação declarativa e de alto nível, projetada para simplificar a criação de animações complexas e coreografias de luz para fitas de LED endereçáveis. O projeto foi desenvolvido como parte dos requisitos da disciplina Lógica da Computação, do curso de Engenharia da Computação no Insper, abrangendo todas as etapas da construção de uma linguagem, desde a especificação formal até a execução de programas em uma máquina virtual (VM) customizada.
 
 ```lumi
